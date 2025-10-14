@@ -1,4 +1,3 @@
-import { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 
 interface Props {
@@ -6,16 +5,11 @@ interface Props {
 }
 
 export const ImageUploader = ({ onImageSelect }: Props) => {
-    const onDrop = useCallback(
-        (acceptedFiles: File[]) => {
-            console.log("Файл выбран:", acceptedFiles);
-            if (acceptedFiles.length > 0) {
-                onImageSelect(acceptedFiles[0]);
-            }
-        },
-        [onImageSelect]
-    );
-
+    const onDrop = (acceptedFiles: File[]) => {
+        if (acceptedFiles.length > 0) {
+            onImageSelect(acceptedFiles[0]);
+        }
+    };
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
         accept: { "image/*": [] },
@@ -25,13 +19,7 @@ export const ImageUploader = ({ onImageSelect }: Props) => {
     return (
         <div
             {...getRootProps()}
-            style={{
-                border: "2px dashed #888",
-                padding: "2rem",
-                textAlign: "center",
-                cursor: "pointer",
-                borderRadius: "12px",
-            }}
+            className="border-2 border-dashed border-gray-400 p-8 text-center cursor-pointer rounded-lg"
         >
             <input {...getInputProps()} />
             {isDragActive ? (
