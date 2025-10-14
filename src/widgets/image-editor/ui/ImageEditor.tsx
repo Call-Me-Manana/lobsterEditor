@@ -27,14 +27,25 @@ export const ImageEditor = ({ image }: Props) => {
         };
     }, [image]);
 
+    const handleDownload = () => {
+        if (!canvasRef.current) return;
+        const link = document.createElement("a");
+        link.download = "image.png"; // имя файла при скачивании
+        link.href = canvasRef.current.toDataURL("image/png");
+        link.click();
+    };
+
     return (
-        <canvas
-            ref={canvasRef}
-            style={{
-                maxWidth: "100%",
-                border: "1px solid gray",
-                borderRadius: "8px",
-            }}
-        />
+        <div>
+            <canvas
+                ref={canvasRef}
+                style={{
+                    maxWidth: "100%",
+                    border: "1px solid gray",
+                    borderRadius: "8px",
+                }}
+            />
+            <button onClick={handleDownload}></button>
+        </div>
     );
 };
