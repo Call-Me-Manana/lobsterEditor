@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { ImageUploader } from "../../../features/upload-image/ui/ImageUploader";
-import { ImageEditor } from "../../../widgets/image-editor/ui/ImageEditor";
+import { ImageUploader } from "@features/upload-image/ui/ImageUploader";
+import { ImageEditor } from "@widgets/image-editor/ui/ImageEditor";
 
 export const EditorPage = () => {
     const [imageSrc, setImageSrc] = useState<string | null>(null);

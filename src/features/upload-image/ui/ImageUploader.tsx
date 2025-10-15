@@ -1,12 +1,33 @@
 import { useDropzone } from "react-dropzone";
 
-interface Props {
+interface ImageUploaderProps {
     onImageSelect: (file: File) => void;
 }
 
-export const ImageUploader = ({ onImageSelect }: Props) => {
-    const onDrop = (acceptedFiles: File[]) => {
+export const ImageUploader = ({ onImageSelect }: ImageUploaderProps) => {
+    const validateImage = async (file: File): Promise<boolean> => {
+        const buffer = await file.slice(0, 4).arrayBuffer();
+        const bytes = new Uint8Array(buffer);
+        const signature = Array.from(bytes)
+            .map((b) => b.toString(16).padStart(2, "0"))
+            .join("");
+
+        const validSignatures = [
+            "89504e47", // PNG
+            "ffd8ffe0", // JPG
+            "ffd8ffe1", // JPG
+            "ffd8ffe2", // JPG
+            "47494638", // GIF
+        ];
+
+        return validSignatures.includes(signature);
+    };
+    const onDrop = async (acceptedFiles: File[]) => {
         if (acceptedFiles.length > 0) {
+            if (!(await validateImage(acceptedFiles[0]))) {
+                alert("Файл не является изображением!");
+                return;
+            }
             onImageSelect(acceptedFiles[0]);
         }
     };

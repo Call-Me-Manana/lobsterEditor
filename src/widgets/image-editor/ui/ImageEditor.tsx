@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { useRef } from "react";
-interface Props {
+interface ImageEditorProps {
     image: string | null;
 }
-export const ImageEditor = ({ image }: Props) => {
+export const ImageEditor = ({ image }: ImageEditorProps) => {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     useEffect(() => {
         if (!image || !canvasRef.current) return;
@@ -12,17 +12,12 @@ export const ImageEditor = ({ image }: Props) => {
         const ctx = canvas.getContext("2d");
         if (!ctx) return;
 
-        // создаём объект изображения
         const img = new Image();
         img.src = image;
 
-        // рисуем, когда изображение загружено
         img.onload = () => {
-            // подгоняем размер canvas под картинку
             canvas.width = img.width;
             canvas.height = img.height;
-
-            // рисуем картинку на canvas
             ctx.drawImage(img, 0, 0);
         };
     }, [image]);
@@ -30,11 +25,7 @@ export const ImageEditor = ({ image }: Props) => {
     return (
         <canvas
             ref={canvasRef}
-            style={{
-                maxWidth: "100%",
-                border: "1px solid gray",
-                borderRadius: "8px",
-            }}
+            className="max-w-full border border-gray-400 rounded-lg"
         />
     );
 };
