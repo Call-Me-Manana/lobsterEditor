@@ -2,8 +2,9 @@ import { useEffect } from "react";
 import { useRef } from "react";
 interface ImageEditorProps {
     image: string | null;
+    text: string;
 }
-export const ImageEditor = ({ image }: ImageEditorProps) => {
+export const ImageEditor = ({ image, text }: ImageEditorProps) => {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     useEffect(() => {
         if (!image || !canvasRef.current) return;
@@ -19,8 +20,11 @@ export const ImageEditor = ({ image }: ImageEditorProps) => {
             canvas.width = img.width;
             canvas.height = img.height;
             ctx.drawImage(img, 0, 0);
+            ctx.font = "48px Lobster";
+            ctx.fillStyle = "white";
+            ctx.fillText(text, 50, 100);
         };
-    }, [image]);
+    }, [image, text]);
 
     return (
         <canvas

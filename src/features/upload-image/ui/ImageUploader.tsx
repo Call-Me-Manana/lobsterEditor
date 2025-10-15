@@ -40,7 +40,7 @@ export const ImageUploader = ({ onImageSelect }: ImageUploaderProps) => {
     return (
         <div
             {...getRootProps()}
-            className="border-2 border-dashed border-gray-400 p-8 text-center cursor-pointer rounded-lg"
+            className="border-2 border-dashed border-gray-700 p-8 text-center cursor-pointer rounded-lg"
         >
             <input {...getInputProps()} />
             {isDragActive ? (
